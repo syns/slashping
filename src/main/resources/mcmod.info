@@ -1,0 +1,23 @@
+[
+   {
+      "modid":"slashping",
+      "name":"/Ping",
+      "description":"/ping command to get another players ping on ANY server. Now with Tab Autocompletion & Better Functionality by syns.",
+      "version":"${version}",
+      "mcversion":"${mcversion}",
+      "url":"https://syns.me/mods",
+      "updateUrl":"",
+      "authorList":[
+         "asbyth",
+         "syns"
+      ],
+      "credits":"Created by asbyth, updated by syns.",
+      "logoFile":"",
+      "screenshots":[
+
+      ],
+      "dependencies":[
+
+      ]
+   }
+]
