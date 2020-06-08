@@ -2,7 +2,7 @@
    {
       "modid":"slashping",
       "name":"/Ping",
-      "description":"/ping command to get another players ping on ANY server. Now with Tab Autocompletion & Better Functionality by syns.",
+      "description":"/ping command to get another players ping on ANY server, inspired by AGC on MMC. Now with Tab Autocompletion & Better Functionality by syns.",
       "version":"${version}",
       "mcversion":"${mcversion}",
       "url":"https://syns.me/mods",

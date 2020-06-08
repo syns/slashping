@@ -2,16 +2,16 @@ package me.syns.slashping;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.command.*;
+import net.minecraft.util.*;
+import java.util.*;
 
-import java.util.Collection;
-import java.util.List;
 
 public class PingCommand extends CommandBase {
+    public List<String> getCommandAliases() {
+        return Arrays.asList("ping");
+    }
+
     public String getCommandName() {
         return "ping";
     }
@@ -21,16 +21,12 @@ public class PingCommand extends CommandBase {
     }
 
     public String getCommandUsage(final ICommandSender sender) {
-        return "/ping <user>";
+        return EnumChatFormatting.RED.toString() + "Usage: /ping <player>";
     }
 
     public void processCommand(ICommandSender sender, String[] args) {
         String name = (args.length == 1) ? args[0] : Minecraft.getMinecraft().getSession().getUsername();
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY.toString() + name + ": " + getPing(name)));
-    }
-
-    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
-        return (args.length == 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE.toString() + name + EnumChatFormatting.DARK_PURPLE.toString() + " has a ping of " + EnumChatFormatting.LIGHT_PURPLE.toString() + getPing(name) + "ms"));
     }
 
     private NetworkPlayerInfo getPlayerInfo(String name) {
@@ -42,8 +38,12 @@ public class PingCommand extends CommandBase {
         NetworkPlayerInfo networkPlayerInfo = getPlayerInfo(ign);
         if (networkPlayerInfo == null) {
             return -1;
-        }
+    }
 
         return networkPlayerInfo.getResponseTime();
+    }
+
+    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
+        return (List<String>)((args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null);
     }
 }
