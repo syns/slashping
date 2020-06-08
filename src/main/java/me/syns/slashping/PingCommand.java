@@ -2,13 +2,19 @@ package me.syns.slashping;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.command.*;
-import net.minecraft.util.*;
-import java.util.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 
-public class PingCommand extends CommandBase
-{
+public class PingCommand extends CommandBase {
     public List<String> getCommandAliases() {
         return Arrays.asList("ping");
     }
@@ -35,8 +41,12 @@ public class PingCommand extends CommandBase
     }
 
     @Override
-    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
-        return (args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null;
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, final BlockPos pos) {
+        if (args.length == 1) {
+            return getListOfStringsMatchingLastWord(args, FMLCommonHandler.instance().getMinecraftServerInstance().getAllUsernames());
+        } else {
+            return null;
+        }
     }
 
     private NetworkPlayerInfo getPlayerInfo(String name) {
@@ -48,7 +58,7 @@ public class PingCommand extends CommandBase
         NetworkPlayerInfo networkPlayerInfo = getPlayerInfo(ign);
         if (networkPlayerInfo == null) {
             return "Offline";
-    }
+        }
 
         return String.valueOf(networkPlayerInfo.getResponseTime());
     }
