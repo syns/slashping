@@ -13,25 +13,30 @@ public class PingCommand extends CommandBase
         return Arrays.asList("ping");
     }
 
+    @Override
     public String getCommandName() {
         return "ping";
     }
 
+    @Override
     public int getRequiredPermissionLevel() {
         return -1;
     }
 
+    @Override
     public String getCommandUsage(final ICommandSender sender) {
         return "";
     }
 
+    @Override
     public void processCommand(ICommandSender sender, String[] args) {
         String name = (args.length == 1) ? args[0] : Minecraft.getMinecraft().getSession().getUsername();
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE.toString() + name + EnumChatFormatting.DARK_PURPLE.toString() + " has a ping of " + EnumChatFormatting.LIGHT_PURPLE.toString() + getPing(name) + "ms"));
     }
 
+    @Override
     public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
-        return (List<String>)((args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null);
+        return (args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null;
     }
 
     private NetworkPlayerInfo getPlayerInfo(String name) {

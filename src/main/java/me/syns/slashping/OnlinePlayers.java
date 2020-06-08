@@ -1,16 +1,14 @@
 package me.syns.slashping;
 
-import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.network.*;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-public class OnlinePlayers {
+public class OnlinePlayers
+{
     public static String[] getListOfPlayerUsernames() {
         final String[] users = null;
         final Collection<NetworkPlayerInfo> players = Ping.mc.getNetHandler().getPlayerInfoMap();
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         for (final NetworkPlayerInfo info : players) {
             list.add(info.getGameProfile().getName());
         }
