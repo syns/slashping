@@ -7,7 +7,8 @@ import net.minecraft.util.*;
 import java.util.*;
 
 
-public class PingCommand extends CommandBase {
+public class PingCommand extends CommandBase
+{
     public List<String> getCommandAliases() {
         return Arrays.asList("ping");
     }
@@ -21,7 +22,7 @@ public class PingCommand extends CommandBase {
     }
 
     public String getCommandUsage(final ICommandSender sender) {
-        return EnumChatFormatting.RED.toString() + "Usage: /ping <player>";
+        return "";
     }
 
     public void processCommand(ICommandSender sender, String[] args) {
@@ -29,21 +30,21 @@ public class PingCommand extends CommandBase {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE.toString() + name + EnumChatFormatting.DARK_PURPLE.toString() + " has a ping of " + EnumChatFormatting.LIGHT_PURPLE.toString() + getPing(name) + "ms"));
     }
 
+    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
+        return (List<String>)((args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null);
+    }
+
     private NetworkPlayerInfo getPlayerInfo(String name) {
         Collection<NetworkPlayerInfo> map = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
         return map.stream().filter(networkPlayerInfo -> networkPlayerInfo.getGameProfile().getName().equals(name)).findFirst().orElse(null);
     }
 
-    private int getPing(String ign) {
+    private String getPing(String ign) {
         NetworkPlayerInfo networkPlayerInfo = getPlayerInfo(ign);
         if (networkPlayerInfo == null) {
-            return -1;
+            return "Offline";
     }
 
-        return networkPlayerInfo.getResponseTime();
-    }
-
-    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
-        return (List<String>)((args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null);
+        return String.valueOf(networkPlayerInfo.getResponseTime());
     }
 }
