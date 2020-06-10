@@ -2,17 +2,13 @@ package me.syns.slashping;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import net.minecraft.command.*;
+import net.minecraft.util.*;
+import java.util.*;
 
 
-public class PingCommand extends CommandBase {
+public class PingCommand extends CommandBase
+{
     public List<String> getCommandAliases() {
         return Arrays.asList("ping");
     }
@@ -38,14 +34,9 @@ public class PingCommand extends CommandBase {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE.toString() + name + EnumChatFormatting.DARK_PURPLE.toString() + " has a ping of " + EnumChatFormatting.LIGHT_PURPLE.toString() + getPing(name) + "ms"));
     }
 
-    public List<String> onTabComplete(String[] args) {
-        List<String> tabUsernames = TabCompletionUtil.getTabUsernames();
-        tabUsernames.remove(Minecraft.getMinecraft().getSession().getUsername());
-        return TabCompletionUtil.getListOfStringsMatchingLastWord(args, tabUsernames);
-    }
-
-    public boolean tabOnly() {
-        return true;
+    @Override
+    public List<String> addTabCompletionOptions(final ICommandSender sender, final String[] args, final BlockPos pos) {
+        return (args.length >= 1) ? getListOfStringsMatchingLastWord(args, OnlinePlayers.getListOfPlayerUsernames()) : null;
     }
 
     private NetworkPlayerInfo getPlayerInfo(String name) {

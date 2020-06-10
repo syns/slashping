@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 import java.io.IOException;
-import java.util.List;
 
 @Mod(modid = "slashping", name = "/Ping", version = "1.0")
 public class Ping {
@@ -20,9 +19,5 @@ public class Ping {
     public void init(final FMLInitializationEvent event) throws IOException {
         MinecraftForge.EVENT_BUS.register(this);
         ClientCommandHandler.instance.registerCommand(new PingCommand());
-    }
-
-    List<String> onTabComplete(String[] args) {
-        return null;
     }
 }
